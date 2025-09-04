@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Nikjo123/Jhonny-jenkins.git', credentialsId: 'github_keys'
+                    url: 'https://github.com/Nikjo123/Jhonny-jenkins.git', credentialsId: 'jenkin'
             }
         }
 
