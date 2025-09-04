@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_USER = 'your-dockerhub-username'
-        DOCKERHUB_CRED = credentials('dockerhub-cred') // Jenkins Credential ID
+        DOCKERHUB_cred = credentials('dockerhub-cred') // Jenkins Credential ID
         IMAGE_NAME = 'jenkins-docker-lab'
     }
 
@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/your-username/jenkins-docker-lab.git'
+                    url: 'https://github.com/your-username/jenkins-docker-lab.git', credentialsId: 'your-jenkins-credential-id-for-github   '
             }
         }
 
@@ -22,17 +22,22 @@ pipeline {
                 }
             }
         }
-
-
         stage('Push to DockerHub') {
             steps {
                 script {
-                    sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
+                    sh "echo $DOCKERHUB_cred_PSW | docker login -u $DOCKERHUB_USER --password-stdin"
                     sh 'docker push $DOCKERHUB_USER/$IMAGE_NAME:latest'
                 }
             }
         }
 
+        stage('Deploy (Run Container)') {
+            steps {
+                script {
+                    sh 'docker run -d -p 5000:5000 --name jenkins_app $DOCKERHUB_USER/$IMAGE_NAME:latest'
+                }
+            }
+        }
     }
 
     post {
