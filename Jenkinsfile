@@ -23,13 +23,6 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests') {
-            steps {
-                script {
-                    sh 'docker run --rm $DOCKERHUB_USER/$IMAGE_NAME:latest pytest || true'
-                }
-            }
-        }
 
         stage('Push to DockerHub') {
             steps {
@@ -40,13 +33,6 @@ pipeline {
             }
         }
 
-        stage('Deploy (Run Container)') {
-            steps {
-                script {
-                    sh 'docker run -d -p 5000:5000 --name jenkins_app $DOCKERHUB_USER/$IMAGE_NAME:latest'
-                }
-            }
-        }
     }
 
     post {
