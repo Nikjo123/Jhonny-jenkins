@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_USER = 'your-dockerhub-username'
-        DOCKERHUB_PASS = credentials('dockerhub-cred') // Jenkins Credential ID
+        DOCKERHUB_CRED = credentials('dockerhub-cred') // Jenkins Credential ID
         IMAGE_NAME = 'jenkins-docker-lab'
     }
 
