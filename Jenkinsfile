@@ -9,20 +9,21 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout Code') {
-        //     steps {
-        //         git branch: 'main', url: 'https://github.com/Nikjo123/Jhonny-jenkins.git', credentialsId: 'jenkin'
-        //     }
-        // }
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'git@github.com:Nikjo123/Jhonny-jenkins.git', credentialsId: 'jenkin'
+            }
+        }
 
         stage('Clean up image and container') {
             steps {
                 script {
-                    sh 'git clone git@github.com:Vishwanathms/t7.14-py-jenkins.git'
+               //     sh 'git clone git@github.com:Vishwanathms/t7.14-py-jenkins.git'
                     sh 'docker rm  jenkins_app -f || true'
                     sh 'docker image rmi $DOCKERHUB_USER/$IMAGE_NAME:latest || true' 
                 }
-            }              
+            }  
+        }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -48,6 +49,7 @@ pipeline {
         stage('Deploy to Kuberentes') {
             steps {
                 script {
+                    sh 'kubectl config get-contexts'
                     sh ' kubectl delete kube-files/python-deploy.yaml || true'
                     sh ' kubectl apply -f kube-files/python-deploy.yaml'
                 }
