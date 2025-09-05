@@ -5,6 +5,7 @@ pipeline {
         DOCKERHUB_USER = 'nikjo123'
         DOCKERHUB_cred = credentials('dockerhub-cred') // Jenkins Credential ID
         IMAGE_NAME = 'jenkins-docker-lab'
+        KUBECONFIG = "/home/jenkins/.kube/config"
     }
 
     stages {
