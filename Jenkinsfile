@@ -14,14 +14,13 @@ pipeline {
                     url: 'https://github.com/Nikjo123/Jhonny-jenkins.git', credentialsId: 'jenkin'
             }
         }
-    }
         stage('Clean up image and container') {
             steps {
                 script {
                     sh 'docker rm  jenkins_app -f || true'
                     sh 'docker image rmi $DOCKERHUB_USER/$IMAGE_NAME:latest || true' 
                 }
-            }
+            } 
         }
         stage('Build Docker Image') {
             steps {
@@ -59,3 +58,4 @@ pipeline {
             echo "❌ Pipeline failed!"
         }
     }
+}
