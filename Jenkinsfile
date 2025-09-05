@@ -59,4 +59,3 @@ pipeline {
             echo "❌ Pipeline failed!"
         }
     }
-}
